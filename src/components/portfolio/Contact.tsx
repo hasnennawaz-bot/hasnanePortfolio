@@ -86,6 +86,9 @@ export const Contact = ({ contact, name }: ContactProps) => {
         </div>
       </section>
       <div className="block ml-auto mr-auto w-full text-center bg-black p-4">
+        <p className="text-xs  md:text-sm text-[#e6e580] mt-6 drop-shadow-md">
+          <b>+91 8269786782</b>
+        </p>
         <p className="text-xs  md:text-sm text-foreground/70 mt-6 drop-shadow-md">
           © {new Date().getFullYear()} {name}. Crafted with passion.
         </p>
