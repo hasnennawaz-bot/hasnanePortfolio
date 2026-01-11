@@ -9,6 +9,9 @@ interface WorkShowcaseProps {
 }
 
 export const WorkShowcase = ({ works }: WorkShowcaseProps) => {
+  // Duplicate items for seamless infinite loop
+  const duplicatedWorks = [...works, ...works];
+
   return (
     <section id="work" className="section-padding relative overflow-hidden">
       {/* Background */}
@@ -31,26 +34,27 @@ export const WorkShowcase = ({ works }: WorkShowcaseProps) => {
           </h2>
         </motion.div>
 
-        {/* Horizontal scroll container */}
-        <div className="relative">
-          <div className="flex gap-6 overflow-x-auto pb-8 scrollbar-hide snap-x snap-mandatory -mx-6 px-6">
-            {works.map((work, index) => (
-              <motion.a
-                key={work.title}
+        {/* Continuous Carousel Container */}
+        <div className="relative overflow-hidden -mx-6 px-6">
+          <div
+            className="flex gap-6"
+            style={{
+              animation: `scroll-carousel ${5 * works.length}s linear infinite`,
+            }}
+          >
+            {duplicatedWorks.map((work, index) => (
+              <a
+                key={`${work.title}-${index}`}
                 href={work.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group relative flex-shrink-0 w-[300px] md:w-[400px] snap-start"
+                className="group relative flex-shrink-0 w-[300px] md:w-[400px]"
               >
                 <div className="glass-card overflow-hidden transition-all duration-500 group-hover:scale-[1.02] group-hover:border-primary/40">
                   {/* Preview area */}
                   <div className="relative h-48 md:h-64 bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10 flex items-center justify-center overflow-hidden">
                     <img
-                      src={`/images/s${index + 1}.jpeg`}
+                      src={`/images/s${(index % works.length) + 1}.jpeg`}
                       alt={work.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
@@ -82,12 +86,9 @@ export const WorkShowcase = ({ works }: WorkShowcaseProps) => {
                     </p>
                   </div>
                 </div>
-              </motion.a>
+              </a>
             ))}
           </div>
-
-          {/* Scroll hint gradient */}
-          <div className="absolute right-0 top-0 bottom-8 w-20 bg-gradient-to-l from-background to-transparent pointer-events-none" />
         </div>
       </div>
     </section>

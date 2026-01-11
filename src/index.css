@@ -266,6 +266,15 @@
     }
   }
 
+  @keyframes scroll-carousel {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-50% - 12px));
+    }
+  }
+
   /* Animation delay utilities */
   .delay-1000 {
     animation-delay: 1s;
